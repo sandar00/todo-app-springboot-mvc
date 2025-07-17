@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<div th:replace="~{includes/partials :: head}"></div>
+
+<body>
+
+
+    <div th:replace="~{includes/navbar :: nav}"></div>
+
+    <div class="container">
+        <div class="d-flex mt-3 mb-2 justify-content-between">
+            <h3 class="">ToDo Lists!</h3>
+            <div class="d-flex justify-content-end">
+                <span class=" me-2">
+                    <a href="/todos/add" class="btn btn-sm btn-success">
+                        <i class="fa fa-plus"></i> ADD
+                    </a>
+                </span>
+
+                <div class="">
+                    <div class="dropdown">
+                        <button class="btn btn-sm btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                            Filter
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="/todos">All</a></li>
+                            <li><a class="dropdown-item" href="/todos/filter/true">Completed</a></li>
+                            <li><a class="dropdown-item" href="/todos/filter/false">UnCompleted</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <th:block th:each="todo : ${todos}">
+            <div class="card mb-2">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-9">
+                            <span th:text="${todo.title}">Default!</span>
+                        </div>
+
+                        <!--        th:attr="class=${todo.completed ? 'btn btn-sm btn-success me-2 disabled' : 'btn btn-sm btn-secondary me-2'}"
+ -->
+                        <div class="col-md-3 d-flex justify-content-end">
+                            <a th:href="@{/todos/toggle/{id}(id=${todo.id})}" class="btn btn-sm me-2"
+                                th:classappend="${not todo.completed ? 'btn-success' : 'btn-secondary'}">
+                                <i class="fa fa-check"></i>
+                            </a>
+                            <a th:href="@{/todos/edit/{id}(id=${todo.id})}" class="btn btn-sm btn-warning me-2">
+                                <i class="fa fa-edit"></i>
+                            </a>
+                            <a th:href="@{/todos/drop/{id}(id=${todo.id})}" class="btn btn-sm btn-danger">
+                                <i class="fa fa-trash"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </th:block>
+
+
+    </div>
+
+
+
+
+
+
+
+
+    <div th:replace="~{includes/partials :: footer}"></div>
+</body>
+
+</html>
